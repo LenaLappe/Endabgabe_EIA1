@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "cryon";
+    src: url(fonts/Colored\ Crayons.ttf);
+}
+
+body{
+    background-image: url(images/blackboard.jpg);
+    font-family: "cryon";
+    color: white;
+    margin: auto;
+    width: 1280px;
+    height: 800px;
+}
+
+.levelButtons {
+    display: block;
+}
+button {
+    display: block;
+    margin: 30px 30px;
+    padding: 20px 50px;
+}
+
+footer {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
