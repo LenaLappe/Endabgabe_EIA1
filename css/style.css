@@ -1,10 +1,10 @@
 @font-face {
     font-family: "cryon";
-    src: url(fonts/Colored\ Crayons.ttf);
+    src: url(../fonts/Colored\ Crayons.ttf);
 }
 
-body{
-    background-image: url(images/blackboard.jpg);
+body {
+    background-image: url(../Images/blackboard.jpg);
     font-family: "cryon";
     color: white;
     margin: auto;
@@ -19,6 +19,26 @@ button {
     display: block;
     margin: 30px 30px;
     padding: 20px 50px;
+}
+
+.containerEasy {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    bottom: 50%;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    margin: 50px auto;
+}
+.field {
+    font-family: "Permanent Marker", cursive;
+    width: 120px;
+    height: 120px;
+    box-shadow: 0 0 0 1px #333333;
+    border: 1px solid white;
+    cursor: pointer;
+    line-height: 100px;
+    font-size: 60px;
 }
 
 footer {
