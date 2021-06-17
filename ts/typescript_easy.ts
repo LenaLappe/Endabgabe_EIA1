@@ -128,31 +128,46 @@ window.addEventListener("load", function(): void {
         [0, 4, 8],
         [2, 4, 6]
     ];
-
+     
     function handleWinningResults(): void {
-        var roundWon: boolean = false;
-
+        var roundCounter: number = 0;
+     
         for (let i: number = 0; i <= 7; i++) {
-            
+            var roundWon: boolean = false; 
 
             for (let k: number = 0; k < 3; k++) {
 
                 let winCondition: number = winningConditions[i][k];
 
-                //vertikal
-                if (winningConditions[i][0] == winningConditions[i][0] == winningConditions[i][0]) {
-                    roundWon = true;
-                    break;
-                }  
-                //horizontal
-                if else (winningConditions[i][0] == winningConditions[i][1] == winningConditions[i][2]){
-
-                }
+              
             }
         }
 
     }
+    
 
 
+// //vertikal
+// if (allEquale(gameboard[i][0], gameboard[i][1], gameboard[i][2] )) {
+//     roundWon = true;
+//     console.log("vertikal");
+//     break;
+// }  
 
+// //horizontal
+// else if (allEquale(gameboard[0][i], gameboard[1][i], gameboard[2][i])) {
+//     roundWon = true;
+//     console.log("horizontal")
+//     break;
+// }  
+
+// //diagonal
+// else if (allEquale(gameboard[0][0], gameboard[1][1], gameboard[2][2])) {
+//     roundWon = true;
+//     console.log("diagonal1")
+// }
+// else if (allEquale(gameboard[2][0], gameboard[1][1], gameboard[0][2])) {
+//     roundWon = true;
+//     console.log("diagonal2")
+// }
 });
