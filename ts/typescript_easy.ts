@@ -139,14 +139,15 @@ window.addEventListener("load", function(): void {
 
                 let winCondition: number = winningConditions[i][k];
 
-                let a: string = myArray[winCondition[0]].symbol;
-                let b: string = myArray[winCondition[1]].symbol;
-                let c: string = myArray[winCondition[2]].symbol;
-
-                if (a === b && b === c) {
+                //vertikal
+                if (winningConditions[i][0] == winningConditions[i][0] == winningConditions[i][0]) {
                     roundWon = true;
                     break;
                 }  
+                //horizontal
+                if else (winningConditions[i][0] == winningConditions[i][1] == winningConditions[i][2]){
+
+                }
             }
         }
 

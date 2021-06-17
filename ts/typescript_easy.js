@@ -87,12 +87,17 @@ window.addEventListener("load", function () {
         for (var i = 0; i <= 7; i++) {
             for (var k = 0; k < 3; k++) {
                 var winCondition = winningConditions[i][k];
-                var a = myArray[winCondition[0]].symbol;
-                var b = myArray[winCondition[1]].symbol;
-                var c = myArray[winCondition[2]].symbol;
-                if (a === b && b === c) {
+                //vertikal
+                if (winningConditions[i][0] == winningConditions[i][0] == winningConditions[i][0]) {
                     roundWon = true;
                     break;
+                }
+                //horizontal
+                if ()
+                    ;
+                else
+                    (winningConditions[i][0] == winningConditions[i][1] == winningConditions[i][2]);
+                {
                 }
             }
         }
