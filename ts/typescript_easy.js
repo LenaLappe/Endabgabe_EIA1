@@ -3,7 +3,9 @@ window.addEventListener("load", function () {
     var levelButtons = document.querySelector(".levelButtons");
     var easyButton = document.getElementById("easyButton");
     var containerEasy = document.querySelector(".containerEasy");
+    var textBox = document.querySelector(".textBox");
     var currentPlayerIsPlayer0 = true;
+    var currentPlayer = "x";
     var board = 8;
     var gameboard;
     var myArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
@@ -67,6 +69,7 @@ window.addEventListener("load", function () {
         }
         currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
         drawField();
+        handleWinningResults();
     }
     //gewinnen einer Runde
     var winningConditions = [
@@ -79,5 +82,20 @@ window.addEventListener("load", function () {
         [0, 4, 8],
         [2, 4, 6]
     ];
+    function handleWinningResults() {
+        var roundWon = false;
+        for (var i = 0; i <= 7; i++) {
+            for (var k = 0; k < 3; k++) {
+                var winCondition = winningConditions[i][k];
+                var a = myArray[winCondition[0]].symbol;
+                var b = myArray[winCondition[1]].symbol;
+                var c = myArray[winCondition[2]].symbol;
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break;
+                }
+            }
+        }
+    }
 });
 //# sourceMappingURL=typescript_easy.js.map

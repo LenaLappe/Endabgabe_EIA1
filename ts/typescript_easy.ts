@@ -1,13 +1,17 @@
 window.addEventListener("load", function(): void {
 
+    
 
     //variablen deklarieren
     let levelButtons: HTMLElement = document.querySelector(".levelButtons");
     let easyButton: HTMLElement = document.getElementById("easyButton");
     let containerEasy: HTMLDivElement = document.querySelector(".containerEasy");
+    let textBox: HTMLElement = document.querySelector(".textBox");
 
 
+    
     let currentPlayerIsPlayer0: boolean = true;
+    let currentPlayer: string = "x";
 
 
     var board: number = 8;
@@ -107,11 +111,14 @@ window.addEventListener("load", function(): void {
         
         currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
         drawField();
+        handleWinningResults();
     }
 
 
+
+
     //gewinnen einer Runde
-    const winningConditions = [
+    const winningConditions: number [][] = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -122,6 +129,28 @@ window.addEventListener("load", function(): void {
         [2, 4, 6]
     ];
 
+    function handleWinningResults(): void {
+        var roundWon: boolean = false;
+
+        for (let i: number = 0; i <= 7; i++) {
+            
+
+            for (let k: number = 0; k < 3; k++) {
+
+                let winCondition: number = winningConditions[i][k];
+
+                let a: string = myArray[winCondition[0]].symbol;
+                let b: string = myArray[winCondition[1]].symbol;
+                let c: string = myArray[winCondition[2]].symbol;
+
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break;
+                }  
+            }
+        }
+
+    }
 
 
 
