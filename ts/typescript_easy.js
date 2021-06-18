@@ -4,8 +4,10 @@ window.addEventListener("load", function () {
     var easyButton = document.getElementById("easyButton");
     var containerEasy = document.querySelector(".containerEasy");
     var textBox = document.querySelector(".textBox");
+    var roundCounter = document.getElementById("roundCounter");
+    var player1Score = document.getElementById("Player1Score");
+    var player2Score = document.getElementById("Player2Score");
     var currentPlayerIsPlayer0 = true;
-    var currentPlayer = "x";
     var board = 8;
     var gameboard;
     var myArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
@@ -28,8 +30,8 @@ window.addEventListener("load", function () {
             if (myArray[i].symbol == "x") {
                 var turn = document.createElement("i");
                 turn.classList.add("fas", "fa-times");
-                turn.style.color = "white";
-                turn.style.fontFamily = "cryon";
+                // turn.style.color = "white";
+                // turn.style.fontFamily = "cryon";
                 console.log("Kreuz");
                 gameboard.appendChild(turn);
             }
@@ -37,8 +39,8 @@ window.addEventListener("load", function () {
             else if (myArray[i].symbol == "o") {
                 var otherTurn = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
-                otherTurn.style.color = "white";
-                otherTurn.style.fontFamily = "cryon";
+                // otherTurn.style.color = "white";
+                // otherTurn.style.fontFamily = "cryon";
                 console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
@@ -83,14 +85,31 @@ window.addEventListener("load", function () {
         [2, 4, 6]
     ];
     function handleWinningResults() {
-        var roundCounter = 0;
+        //durchgehen des Arrays winningCondition 
         for (var i = 0; i <= 7; i++) {
             var roundWon = false;
-            for (var k = 0; k < 3; k++) {
-                var winCondition = winningConditions[i][k];
+            if (myArray[winningConditions[i][0]].symbol != "free" || myArray[winningConditions[i][1]].symbol != "free" || myArray[winningConditions[i][2]].symbol != "free") {
+                if (myArray[winningConditions[i][0]].symbol == myArray[winningConditions[i][1]].symbol && myArray[winningConditions[i][1]].symbol == myArray[winningConditions[i][2]].symbol) {
+                    roundWon = true;
+                    console.log("gewinnen funktioniert");
+                }
             }
         }
+        if (roundWon === true) {
+            gameEnding();
+        }
     }
+    function gameEnding() {
+        textBox = document.createElement("div");
+    }
+    // function allEquale(a, b, c): boolean {
+    //     if(a == b && b == c) {
+    //        return true;
+    //     }
+    //     else {
+    //        return false;
+    //     }
+    //  }
     // //vertikal
     // if (allEquale(gameboard[i][0], gameboard[i][1], gameboard[i][2] )) {
     //     roundWon = true;

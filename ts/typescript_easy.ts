@@ -8,10 +8,15 @@ window.addEventListener("load", function(): void {
     let containerEasy: HTMLDivElement = document.querySelector(".containerEasy");
     let textBox: HTMLElement = document.querySelector(".textBox");
 
+    var roundCounter: HTMLElement = document.getElementById("roundCounter");
+    var player1Score: HTMLElement = document.getElementById("Player1Score");
+    var player2Score: HTMLElement = document.getElementById("Player2Score");
+
+
 
     
     let currentPlayerIsPlayer0: boolean = true;
-    let currentPlayer: string = "x";
+    
 
 
     var board: number = 8;
@@ -56,8 +61,8 @@ window.addEventListener("load", function(): void {
             if (myArray[i].symbol == "x") {
                 const turn: HTMLElement = document.createElement("i");
                 turn.classList.add("fas", "fa-times");
-                turn.style.color = "white";
-                turn.style.fontFamily = "cryon";
+                // turn.style.color = "white";
+                // turn.style.fontFamily = "cryon";
                 console.log("Kreuz");
                 
 
@@ -68,8 +73,8 @@ window.addEventListener("load", function(): void {
              else if (myArray[i].symbol == "o") {
                 const otherTurn: HTMLElement = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
-                otherTurn.style.color = "white";
-                otherTurn.style.fontFamily = "cryon";
+                // otherTurn.style.color = "white";
+                // otherTurn.style.fontFamily = "cryon";
                 console.log("Kreis");
 
 
@@ -110,7 +115,8 @@ window.addEventListener("load", function(): void {
         }
         
         currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
-        drawField();
+        drawField()
+
         handleWinningResults();
     }
 
@@ -128,24 +134,47 @@ window.addEventListener("load", function(): void {
         [0, 4, 8],
         [2, 4, 6]
     ];
+
+   
      
     function handleWinningResults(): void {
-        var roundCounter: number = 0;
-     
+
+        //durchgehen des Arrays winningCondition 
         for (let i: number = 0; i <= 7; i++) {
             var roundWon: boolean = false; 
 
-            for (let k: number = 0; k < 3; k++) {
+            if  (myArray[winningConditions[i][0]].symbol != "free" || myArray[winningConditions[i][1]].symbol != "free" || myArray[winningConditions[i][2]].symbol != "free") {
 
-                let winCondition: number = winningConditions[i][k];
-
-              
+                if (myArray[winningConditions[i][0]].symbol == myArray[winningConditions[i][1]].symbol && myArray[winningConditions[i][1]].symbol == myArray[winningConditions[i][2]].symbol) {
+                    roundWon = true;
+                    console.log ("gewinnen funktioniert");
+                }
             }
+        
         }
+
+        if (roundWon === true) {
+           gameEnding();
+        }
+
 
     }
     
 
+    function gameEnding (): void {
+
+        textBox = document.createElement("div")
+    }
+
+
+ // function allEquale(a, b, c): boolean {
+    //     if(a == b && b == c) {
+    //        return true;
+    //     }
+    //     else {
+    //        return false;
+    //     }
+    //  }
 
 // //vertikal
 // if (allEquale(gameboard[i][0], gameboard[i][1], gameboard[i][2] )) {
@@ -170,4 +199,5 @@ window.addEventListener("load", function(): void {
 //     roundWon = true;
 //     console.log("diagonal2")
 // }
+
 });
