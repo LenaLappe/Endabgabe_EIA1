@@ -181,7 +181,11 @@ window.addEventListener("load", function(): void {
 
     function roundEnding (): void {
 
-        drawField();
+        document.querySelectorAll(".field").forEach(field => field.innerHTML = "");
+        
+        if (gameboard.innerHTML == "") {
+            drawField();
+        }
         console.log("neu zeichnen");
     }
 

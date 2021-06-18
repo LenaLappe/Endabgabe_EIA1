@@ -114,7 +114,10 @@ window.addEventListener("load", function () {
         }
     }
     function roundEnding() {
-        drawField();
+        document.querySelectorAll(".field").forEach(function (field) { return field.innerHTML = ""; });
+        if (gameboard.innerHTML == "") {
+            drawField();
+        }
         console.log("neu zeichnen");
     }
     function endBox() {

@@ -54,6 +54,15 @@ div.field i.far.fa-circle {
     color: white;
     font-size: 80px;
 }
+/* .textBox {
+    background-color: white;
+    color: black;
+    font-family: "cryon";
+    border-radius: 20%;
+    border-color: grey;
+    height: 120px;
+    width: 300px;
+} */
 
 footer {
     position: absolute;
