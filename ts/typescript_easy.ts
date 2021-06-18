@@ -17,7 +17,8 @@ window.addEventListener("load", function(): void {
     var medium: number = 4;
     var hard: number = 5;
 
-    var countsEveryRound: number = 0;
+    var countsEveryRound: number = 1;
+    var roundWon: boolean = false;
 
     
     let currentPlayerIsPlayer0: boolean = true;
@@ -56,10 +57,10 @@ window.addEventListener("load", function(): void {
 
             containerEasy.appendChild(gameboard);
             gameboard.setAttributeNode(idField);
-            console.log(i);
+            // console.log(i);
 
         
-        
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
 
         //Felder werden mit ensprechenden icons gefüllt
         //Spieler1 = x
@@ -67,7 +68,7 @@ window.addEventListener("load", function(): void {
                 const turn: HTMLElement = document.createElement("i");
                 turn.classList.add("fas", "fas", "fa-times");
                 // turn.style.color = "white";
-                console.log("Kreuz");
+                // console.log("Kreuz");
                 
 
                 gameboard.appendChild(turn);
@@ -78,7 +79,7 @@ window.addEventListener("load", function(): void {
                 const otherTurn: HTMLElement = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
-                console.log("Kreis");
+                // console.log("Kreis");
 
 
                 gameboard.appendChild(otherTurn);
@@ -87,7 +88,7 @@ window.addEventListener("load", function(): void {
 
         //überwachung der freien Felder, ob gedrückt wurde
             else if (myArray[i].symbol == "free") {
-                console.log("i is " + i);
+                // console.log("i is " + i);
                 gameboard.addEventListener("click", function(): void {clickFunction(i); });
             }
         
@@ -100,7 +101,7 @@ window.addEventListener("load", function(): void {
 
 
     function clickFunction(positionImArray: number): void {
-        console.log("position is " + positionImArray);
+        // console.log("position is " + positionImArray);
         for (let index: number  = 0; index <= board; index++) {
             if (positionImArray == index) {
                 if (currentPlayerIsPlayer0 == true) {
@@ -145,7 +146,7 @@ window.addEventListener("load", function(): void {
 
         //durchgehen des Arrays winningCondition 
         for (let i: number = 0; i <= 7; i++) {
-            var roundWon: boolean = false; 
+             
 
             if  (myArray[winningConditions[i][0]].symbol != "free" || myArray[winningConditions[i][1]].symbol != "free" || myArray[winningConditions[i][2]].symbol != "free") {
 
@@ -161,20 +162,35 @@ window.addEventListener("load", function(): void {
                 console.log("check counter");
                 updateCounter();
                 console.log("End function fired");
-                gameEnding();
+                roundEnding();
+                    
             }
-        }
+            
+        } 
     }
 
     function updateCounter(): void {
+
         roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
+
+        if (countsEveryRound == easy) {
+            endBox();
+        }
     }
     
 
-    function gameEnding (): void {
-        console.log("ending")
-        containerEasy.innerHTML = "";
+    function roundEnding (): void {
+
         drawField();
+        console.log("neu zeichnen");
+    }
+
+
+    function endBox (): void {
+
+        containerEasy.innerHTML = "";
+        console.log("spielfeld löschen");
+        textBox.innerHTML = "the winner is";
     }
 
 
