@@ -20,12 +20,18 @@ button {
     margin: 30px 30px;
     padding: 20px 50px;
 }
+.counter {
+    font-family: "cryon";
+    color: white;
+    bottom: 70%;
+
+}
 
 .containerEasy {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 50%);
-    bottom: 50%;
+    bottom: 40%;
     display: grid;
     grid-template-columns: repeat(3, auto);
     margin: 50px auto;
@@ -42,11 +48,11 @@ button {
 }
 div.field i.fas.fa-times {
     color: white;
-    font-family: "cryon";
+    font-size: 80px;
 }
 div.field i.far.fa-circle {
     color: white;
-    font-family: "cryon";
+    font-size: 80px;
 }
 
 footer {

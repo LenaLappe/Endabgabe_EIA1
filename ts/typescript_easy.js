@@ -4,9 +4,13 @@ window.addEventListener("load", function () {
     var easyButton = document.getElementById("easyButton");
     var containerEasy = document.querySelector(".containerEasy");
     var textBox = document.querySelector(".textBox");
-    var roundCounter = document.getElementById("roundCounter");
+    var roundCounter = document.querySelector("#roundCounter");
     var player1Score = document.getElementById("Player1Score");
     var player2Score = document.getElementById("Player2Score");
+    var easy = 3;
+    var medium = 4;
+    var hard = 5;
+    var countsEveryRound = 0;
     var currentPlayerIsPlayer0 = true;
     var board = 8;
     var gameboard;
@@ -29,9 +33,8 @@ window.addEventListener("load", function () {
             //Spieler1 = x
             if (myArray[i].symbol == "x") {
                 var turn = document.createElement("i");
-                turn.classList.add("fas", "fa-times");
+                turn.classList.add("fas", "fas", "fa-times");
                 // turn.style.color = "white";
-                // turn.style.fontFamily = "cryon";
                 console.log("Kreuz");
                 gameboard.appendChild(turn);
             }
@@ -40,7 +43,6 @@ window.addEventListener("load", function () {
                 var otherTurn = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
-                // otherTurn.style.fontFamily = "cryon";
                 console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
@@ -91,16 +93,26 @@ window.addEventListener("load", function () {
             if (myArray[winningConditions[i][0]].symbol != "free" || myArray[winningConditions[i][1]].symbol != "free" || myArray[winningConditions[i][2]].symbol != "free") {
                 if (myArray[winningConditions[i][0]].symbol == myArray[winningConditions[i][1]].symbol && myArray[winningConditions[i][1]].symbol == myArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
-                    console.log("gewinnen funktioniert");
+                    countsEveryRound++;
+                    console.log("Runde " + countsEveryRound);
+                    console.log("won");
                 }
             }
-        }
-        if (roundWon === true) {
-            gameEnding();
+            if (roundWon == true) {
+                console.log("check counter");
+                updateCounter();
+                console.log("End function fired");
+                gameEnding();
+            }
         }
     }
+    function updateCounter() {
+        roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
+    }
     function gameEnding() {
-        textBox = document.createElement("div");
+        console.log("ending");
+        containerEasy.innerHTML = "";
+        drawField();
     }
     // function allEquale(a, b, c): boolean {
     //     if(a == b && b == c) {

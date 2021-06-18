@@ -2,17 +2,22 @@ window.addEventListener("load", function(): void {
 
     
 
+
     //variablen deklarieren
     let levelButtons: HTMLElement = document.querySelector(".levelButtons");
     let easyButton: HTMLElement = document.getElementById("easyButton");
     let containerEasy: HTMLDivElement = document.querySelector(".containerEasy");
     let textBox: HTMLElement = document.querySelector(".textBox");
 
-    var roundCounter: HTMLElement = document.getElementById("roundCounter");
+    var roundCounter: HTMLElement = document.querySelector("#roundCounter");
     var player1Score: HTMLElement = document.getElementById("Player1Score");
     var player2Score: HTMLElement = document.getElementById("Player2Score");
 
+    var easy: number = 3;
+    var medium: number = 4;
+    var hard: number = 5;
 
+    var countsEveryRound: number = 0;
 
     
     let currentPlayerIsPlayer0: boolean = true;
@@ -60,9 +65,8 @@ window.addEventListener("load", function(): void {
         //Spieler1 = x
             if (myArray[i].symbol == "x") {
                 const turn: HTMLElement = document.createElement("i");
-                turn.classList.add("fas", "fa-times");
+                turn.classList.add("fas", "fas", "fa-times");
                 // turn.style.color = "white";
-                // turn.style.fontFamily = "cryon";
                 console.log("Kreuz");
                 
 
@@ -74,7 +78,6 @@ window.addEventListener("load", function(): void {
                 const otherTurn: HTMLElement = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
-                // otherTurn.style.fontFamily = "cryon";
                 console.log("Kreis");
 
 
@@ -138,6 +141,7 @@ window.addEventListener("load", function(): void {
    
      
     function handleWinningResults(): void {
+        
 
         //durchgehen des Arrays winningCondition 
         for (let i: number = 0; i <= 7; i++) {
@@ -147,23 +151,30 @@ window.addEventListener("load", function(): void {
 
                 if (myArray[winningConditions[i][0]].symbol == myArray[winningConditions[i][1]].symbol && myArray[winningConditions[i][1]].symbol == myArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
-                    console.log ("gewinnen funktioniert");
+                    countsEveryRound++;
+                    console.log("Runde " + countsEveryRound);
+                    console.log ("won");
                 }
             }
-        
+
+            if (roundWon == true) {
+                console.log("check counter");
+                updateCounter();
+                console.log("End function fired");
+                gameEnding();
+            }
         }
+    }
 
-        if (roundWon === true) {
-           gameEnding();
-        }
-
-
+    function updateCounter(): void {
+        roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
     }
     
 
     function gameEnding (): void {
-
-        textBox = document.createElement("div")
+        console.log("ending")
+        containerEasy.innerHTML = "";
+        drawField();
     }
 
 
