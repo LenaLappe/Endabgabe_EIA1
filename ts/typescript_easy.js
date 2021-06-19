@@ -100,27 +100,24 @@ window.addEventListener("load", function () {
                 }
             }
             if (roundWon == true) {
-                console.log("check counter");
-                updateCounter();
-                console.log("End function fired");
-                roundEnding();
+                console.log("RoundEnd function fired");
+                gameEnding();
             }
         }
     }
-    function updateCounter() {
-        roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
+    function gameEnding() {
+        for (var i = 0; i <= board; i++) {
+            myArray[i].symbol = "free";
+            roundWon = false;
+            drawField();
+            console.log("neu zeichnen");
+        }
         if (countsEveryRound == easy) {
             endBox();
         }
     }
-    function roundEnding() {
-        document.querySelectorAll(".field").forEach(function (field) { return field.innerHTML = ""; });
-        if (gameboard.innerHTML == "") {
-            drawField();
-        }
-        console.log("neu zeichnen");
-    }
     function endBox() {
+        gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
         console.log("spielfeld löschen");
         textBox.innerHTML = "the winner is";

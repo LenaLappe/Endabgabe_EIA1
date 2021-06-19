@@ -1,8 +1,5 @@
 window.addEventListener("load", function(): void {
 
-    
-
-
     //variablen deklarieren
     let levelButtons: HTMLElement = document.querySelector(".levelButtons");
     let easyButton: HTMLElement = document.getElementById("easyButton");
@@ -91,9 +88,7 @@ window.addEventListener("load", function(): void {
                 // console.log("i is " + i);
                 gameboard.addEventListener("click", function(): void {clickFunction(i); });
             }
-        
-        }
-        
+        } 
     }
 
 
@@ -159,39 +154,38 @@ window.addEventListener("load", function(): void {
             }
 
             if (roundWon == true) {
-                console.log("check counter");
-                updateCounter();
-                console.log("End function fired");
-                roundEnding();
+               
+                console.log("RoundEnd function fired");
+                gameEnding();
                     
             }
             
         } 
     }
 
-    function updateCounter(): void {
+    
+    
 
-        roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
+    function gameEnding (): void {
+
+        for (let i: number = 0; i <= board; i++) {
+
+            myArray[i].symbol = "free";
+
+            roundWon = false;
+            drawField();
+            console.log("neu zeichnen");
+        }
 
         if (countsEveryRound == easy) {
             endBox();
         }
     }
-    
-
-    function roundEnding (): void {
-
-        document.querySelectorAll(".field").forEach(field => field.innerHTML = "");
-        
-        if (gameboard.innerHTML == "") {
-            drawField();
-        }
-        console.log("neu zeichnen");
-    }
 
 
     function endBox (): void {
 
+        gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
         console.log("spielfeld löschen");
         textBox.innerHTML = "the winner is";
