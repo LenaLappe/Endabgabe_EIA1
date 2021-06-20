@@ -4,22 +4,46 @@ window.addEventListener("load", function () {
     var easyButton = document.getElementById("easyButton");
     var containerEasy = document.querySelector(".containerEasy");
     var textBox = document.querySelector(".textBox");
+    var comOrPlayerButton = document.querySelector(".comOrPlayerButton");
+    var playerButton = document.querySelector(".playerButton");
+    var comButton = document.querySelector(".comButton");
     var roundCounter = document.querySelector("#roundCounter");
     var player1Score = document.getElementById("Player1Score");
     var player2Score = document.getElementById("Player2Score");
-    var easy = 3;
-    var medium = 4;
-    var hard = 5;
+    var p1Score = 0;
+    var p2Score = 0;
+    var easy = 4;
+    var medium = 5;
+    var hard = 6;
     var countsEveryRound = 1;
     var roundWon = false;
+    var counterFreePosition = 0;
     var currentPlayerIsPlayer0 = true;
+    var comVariable = false;
     var board = 8;
     var gameboard;
     var myArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
-    easyButton.addEventListener("click", drawField);
-    function drawField() {
+    easyButton.addEventListener("click", comOrPlayerHandler);
+    function comOrPlayerHandler() {
         //alle Buttons verschwinden lassen und HTML einmal grundleeren
         levelButtons.innerHTML = "";
+        // buttons für Player vs Player oder Player vs Com generieren
+        // nach click auf einen Button wird das Spielfeld generiert
+        comButton = document.createElement("button");
+        comButton.classList.add("comButton");
+        comButton.innerHTML = "Player vs Com";
+        comVariable = true;
+        comButton.addEventListener("click", drawField);
+        comOrPlayerButton.appendChild(comButton);
+        playerButton = document.createElement("button");
+        playerButton.classList.add("playerButton");
+        playerButton.innerHTML = "Player vs Player";
+        playerButton.addEventListener("click", drawField);
+        comOrPlayerButton.appendChild(playerButton);
+    }
+    function drawField() {
+        // div mit comOrPlayerButtons leeren
+        comOrPlayerButton.innerHTML = "";
         //nach jedem durchlauf Container leeren, sonst generieren sich immer neue 9 divs
         containerEasy.innerHTML = "";
         var _loop_1 = function (i) {
@@ -30,7 +54,9 @@ window.addEventListener("load", function () {
             containerEasy.appendChild(gameboard);
             gameboard.setAttributeNode(idField);
             // console.log(i);
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of " + easy;
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
+            player1Score.innerHTML = "Player 1: " + p1Score;
+            player2Score.innerHTML = "Player 2: " + p2Score;
             //Felder werden mit ensprechenden icons gefüllt
             //Spieler1 = x
             if (myArray[i].symbol == "x") {
@@ -48,6 +74,9 @@ window.addEventListener("load", function () {
                 // console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
+            // else if (currentPlayerIsPlayer0 == false && comVariable == true ) {
+            //     comHandler();
+            // }
             //überwachung der freien Felder, ob gedrückt wurde
             else if (myArray[i].symbol == "free") {
                 // console.log("i is " + i);
@@ -59,6 +88,14 @@ window.addEventListener("load", function () {
             _loop_1(i);
         }
     }
+    // function comHandler(): void {
+    //     setTimeout (function(): void {
+    //         if (comVariable == true) {
+    //             var randomNumber: number = Math.floor(Math.random());
+    //             myArray[randomNumber].symbol = "o";
+    //         }
+    //     },          300);
+    // }
     function clickFunction(positionImArray) {
         // console.log("position is " + positionImArray);
         for (var index = 0; index <= board; index++) {
@@ -101,13 +138,34 @@ window.addEventListener("load", function () {
             }
             if (roundWon == true) {
                 console.log("RoundEnd function fired");
-                gameEnding();
+                scoreHandler();
             }
         }
+        for (var x = 0; x < myArray.length; x++) {
+            counterFreePosition = 0;
+            if (myArray[x].symbol == "free") {
+                counterFreePosition++;
+            }
+        }
+        if (counterFreePosition == 0) {
+            gameEnding();
+        }
+    }
+    function scoreHandler() {
+        if (currentPlayerIsPlayer0 == true) {
+            p2Score++;
+            console.log("player 2 score ");
+        }
+        else {
+            p1Score++;
+            console.log("player 1 score ");
+        }
+        gameEnding();
     }
     function gameEnding() {
-        for (var i = 0; i <= board; i++) {
+        for (var i = 0; i < myArray.length; i++) {
             myArray[i].symbol = "free";
+            comVariable = false;
             roundWon = false;
             drawField();
             console.log("neu zeichnen");
@@ -117,10 +175,19 @@ window.addEventListener("load", function () {
         }
     }
     function endBox() {
+        roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
         console.log("spielfeld löschen");
-        textBox.innerHTML = "the winner is";
+        if (player1Score >= player2Score) {
+            textBox.innerHTML = "the winner is Player 1";
+        }
+        else if (player1Score <= player2Score) {
+            textBox.innerHTML = "the winner is Player 2";
+        }
+        else if (player1Score == player2Score) {
+            textBox.innerHTML = "it's a draw";
+        }
     }
     // function allEquale(a, b, c): boolean {
     //     if(a == b && b == c) {

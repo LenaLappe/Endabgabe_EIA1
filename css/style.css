@@ -26,6 +26,11 @@ button {
     bottom: 70%;
 
 }
+.player1 {
+    position: relative;
+    font-family: "cryon";
+    color: white;
+}
 
 .containerEasy {
     position: absolute;
