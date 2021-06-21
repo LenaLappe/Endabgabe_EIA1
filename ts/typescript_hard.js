@@ -1,8 +1,8 @@
 window.addEventListener("load", function () {
     //variablen deklarieren
     var levelButtons = document.querySelector(".levelButtons");
-    var easyButton = document.getElementById("easyButton");
-    var containerEasy = document.querySelector(".containerEasy");
+    var hardButton = document.getElementById("hardButton");
+    var containerHard = document.querySelector(".containerHard");
     var textBox = document.querySelector(".textBox");
     var comOrPlayerButton = document.querySelector(".comOrPlayerButton");
     var playerButton = document.querySelector(".playerButton");
@@ -20,10 +20,10 @@ window.addEventListener("load", function () {
     var roundWon = false;
     var currentPlayerIsPlayer0 = true;
     var comVariable = false;
-    var board = 8;
+    var board = 24;
     var gameboard;
-    var easyArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
-    easyButton.addEventListener("click", comOrPlayerHandler);
+    var hardArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
+    hardButton.addEventListener("click", comOrPlayerHandler);
     function comOrPlayerHandler() {
         //alle Buttons verschwinden lassen und HTML einmal grundleeren
         levelButtons.innerHTML = "";
@@ -53,21 +53,21 @@ window.addEventListener("load", function () {
         // div mit comOrPlayerButtons leeren
         comOrPlayerButton.innerHTML = "";
         //nach jedem durchlauf Container leeren, sonst generieren sich immer neue 9 divs
-        containerEasy.innerHTML = "";
+        containerHard.innerHTML = "";
         var _loop_1 = function (i) {
             gameboard = document.createElement("div");
             gameboard.classList.add("field");
             var idField = document.createAttribute("id");
             idField.value = i.toString();
-            containerEasy.appendChild(gameboard);
+            containerHard.appendChild(gameboard);
             gameboard.setAttributeNode(idField);
             console.log(i);
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 5";
             player1Score.innerHTML = "Player 1: " + p1Score;
             player2Score.innerHTML = "Player 2: " + p2Score;
             //Felder werden mit ensprechenden icons gefüllt
             //Spieler1 = x
-            if (easyArray[i].symbol == "x") {
+            if (hardArray[i].symbol == "x") {
                 var turn = document.createElement("i");
                 turn.classList.add("fas", "fas", "fa-times");
                 // turn.style.color = "white";
@@ -75,7 +75,7 @@ window.addEventListener("load", function () {
                 gameboard.appendChild(turn);
             }
             //Spieler2 = o
-            else if (easyArray[i].symbol == "o") {
+            else if (hardArray[i].symbol == "o") {
                 var otherTurn = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
@@ -86,7 +86,7 @@ window.addEventListener("load", function () {
             //     comHandler();
             // }
             //überwachung der freien Felder, ob gedrückt wurde
-            else if (easyArray[i].symbol == "free") {
+            else if (hardArray[i].symbol == "free") {
                 // console.log("i is " + i);
                 gameboard.addEventListener("click", function () { clickFunction(i); });
             }
@@ -109,11 +109,11 @@ window.addEventListener("load", function () {
         for (var index = 0; index <= board; index++) {
             if (positionImArray == index) {
                 if (currentPlayerIsPlayer0 == true) {
-                    easyArray[index].symbol = "x";
+                    hardArray[index].symbol = "x";
                     console.log("Kreuz gedrückt");
                 }
                 else {
-                    easyArray[index].symbol = "o";
+                    hardArray[index].symbol = "o";
                     console.log("Kreis gedrückt");
                 }
             }
@@ -124,20 +124,24 @@ window.addEventListener("load", function () {
     }
     //gewinnen einer Runde
     var winningConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
+        [0, 1, 2, 3, 4],
+        [5, 6, 7, 8, 9],
+        [10, 11, 12, 13, 14],
+        [15, 16, 17, 18, 19],
+        [20, 21, 22, 23, 24],
+        [0, 5, 10, 15, 20],
+        [1, 6, 11, 16, 21],
+        [2, 7, 12, 17, 22],
+        [3, 8, 13, 18, 23],
+        [4, 9, 14, 19, 24],
+        [0, 6, 12, 18, 24],
+        [4, 8, 12, 16, 20]
     ];
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
-        for (var i = 0; i <= 7; i++) {
-            if (easyArray[winningConditions[i][0]].symbol != "free" || easyArray[winningConditions[i][1]].symbol != "free" || easyArray[winningConditions[i][2]].symbol != "free") {
-                if (easyArray[winningConditions[i][0]].symbol == easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol == easyArray[winningConditions[i][2]].symbol) {
+        for (var i = 0; i <= winningConditions.length; i++) {
+            if (hardArray[winningConditions[i][0]].symbol != "free" || hardArray[winningConditions[i][1]].symbol != "free" || hardArray[winningConditions[i][2]].symbol != "free" || hardArray[winningConditions[i][3]].symbol != "free" || hardArray[winningConditions[i][4]].symbol != "free") {
+                if (hardArray[winningConditions[i][0]].symbol == hardArray[winningConditions[i][1]].symbol && hardArray[winningConditions[i][1]].symbol == hardArray[winningConditions[i][2]].symbol && hardArray[winningConditions[i][2]].symbol == hardArray[winningConditions[i][3]].symbol && hardArray[winningConditions[i][3]].symbol == hardArray[winningConditions[i][4]].symbol) {
                     roundWon = true;
                     countsEveryRound++;
                     console.log("Runde " + countsEveryRound);
@@ -149,9 +153,9 @@ window.addEventListener("load", function () {
                 scoreHandler();
             }
         }
-        for (var index = 0; index <= easyArray.length; index++) {
+        for (var index = 0; index <= hardArray.length; index++) {
             var counterFreePosition = 0;
-            if (easyArray[index].symbol == "free") {
+            if (hardArray[index].symbol == "free") {
                 counterFreePosition++;
                 console.log("free" + counterFreePosition);
             }
@@ -172,21 +176,21 @@ window.addEventListener("load", function () {
         gameEnding();
     }
     function gameEnding() {
-        for (var i = 0; i < easyArray.length; i++) {
-            easyArray[i].symbol = "free";
+        for (var i = 0; i < hardArray.length; i++) {
+            hardArray[i].symbol = "free";
             comVariable = false;
             roundWon = false;
             drawField();
             console.log("neu zeichnen");
         }
-        if (countsEveryRound == easy) {
+        if (countsEveryRound == hard) {
             endBox();
         }
     }
     function endBox() {
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
-        containerEasy.innerHTML = "";
+        containerHard.innerHTML = "";
         console.log("spielfeld löschen");
         if (p1Score >= p2Score) {
             textBox.innerHTML = "the winner is Player 1";
@@ -207,7 +211,5 @@ window.addEventListener("load", function () {
     //mir fehlt:
     // 1. draw
     // 2. com gegner
-    // 4. mittlere schwierigkeit
-    // 5. schwierige schwierigkeit
 });
-//# sourceMappingURL=typescript_easy.js.map
+//# sourceMappingURL=typescript_hard.js.map
