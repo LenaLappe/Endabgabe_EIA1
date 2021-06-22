@@ -20,7 +20,7 @@ window.addEventListener("load", function () {
     var roundWon = false;
     var currentPlayerIsPlayer0 = true;
     var comVariable = false;
-    var board = 8;
+    var board = 15;
     var gameboard;
     var mediumArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
     mediumButton.addEventListener("click", comOrPlayerHandler);
@@ -64,7 +64,7 @@ window.addEventListener("load", function () {
             containerMedium.appendChild(gameboard);
             gameboard.setAttributeNode(idField);
             console.log(i);
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 4";
             player1Score.innerHTML = "Player 1: " + p1Score;
             player2Score.innerHTML = "Player 2: " + p2Score;
             //Felder werden mit ensprechenden icons gefüllt
@@ -110,7 +110,7 @@ window.addEventListener("load", function () {
             handleWinningResults();
             console.log("random number is " + randomNumber);
             console.log("comHandler fired");
-        }, 300);
+        }, 500);
     }
     function clickFunction(positionImArray) {
         // console.log("position is " + positionImArray);
@@ -151,7 +151,7 @@ window.addEventListener("load", function () {
     ];
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
-        for (var i = 0; i <= 7; i++) {
+        for (var i = 0; i < winningConditions.length; i++) {
             if (mediumArray[winningConditions[i][0]].symbol != "free" || mediumArray[winningConditions[i][1]].symbol != "free" || mediumArray[winningConditions[i][2]].symbol != "free" || mediumArray[winningConditions[i][3]].symbol != "free") {
                 if (mediumArray[winningConditions[i][0]].symbol == mediumArray[winningConditions[i][1]].symbol && mediumArray[winningConditions[i][1]].symbol == mediumArray[winningConditions[i][2]].symbol && mediumArray[winningConditions[i][2]].symbol == mediumArray[winningConditions[i][3]].symbol) {
                     roundWon = true;

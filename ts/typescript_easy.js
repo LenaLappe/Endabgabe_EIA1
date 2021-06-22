@@ -110,7 +110,7 @@ window.addEventListener("load", function () {
             handleWinningResults();
             console.log("random number is " + randomNumber);
             console.log("comHandler fired");
-        }, 300);
+        }, 500);
     }
     function clickFunction(positionImArray) {
         // console.log("position is " + positionImArray);
@@ -149,7 +149,7 @@ window.addEventListener("load", function () {
     ];
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
-        for (var i = 0; i <= 7; i++) {
+        for (var i = 0; i < winningConditions.length; i++) {
             if (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
                 if (easyArray[winningConditions[i][0]].symbol === easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol === easyArray[winningConditions[i][2]].symbol) {
                     roundWon = true;

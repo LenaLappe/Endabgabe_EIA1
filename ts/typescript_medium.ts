@@ -28,7 +28,7 @@ window.addEventListener("load", function(): void {
     
     var comVariable: boolean = false;
 
-    var board: number = 8;
+    var board: number = 15;
     let gameboard: HTMLDivElement;
 
     interface FieldType {symbol: string; }
@@ -104,7 +104,7 @@ window.addEventListener("load", function(): void {
             console.log(i);
 
         
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 4";
             player1Score.innerHTML = "Player 1: " + p1Score;
             player2Score.innerHTML = "Player 2: " + p2Score;
 
@@ -164,7 +164,7 @@ window.addEventListener("load", function(): void {
             console.log("random number is " + randomNumber);
             console.log("comHandler fired");
 
-        },          300);
+        },          500);
     }
 
  
@@ -229,7 +229,7 @@ window.addEventListener("load", function(): void {
         
 
         //durchgehen des Arrays winningCondition 
-        for (let i: number = 0; i <= 7; i++) {
+        for (let i: number = 0; i < winningConditions.length; i++) {
              
             if  ( mediumArray[winningConditions[i][0]].symbol != "free" || mediumArray[winningConditions[i][1]].symbol != "free" || mediumArray[winningConditions[i][2]].symbol != "free" || mediumArray[winningConditions[i][3]].symbol != "free") {
 
