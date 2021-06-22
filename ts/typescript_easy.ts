@@ -73,8 +73,8 @@ window.addEventListener("load", function(): void {
 
         comOrPlayerButton.appendChild(playerButton);
 
-
     }
+
 
     function drawField(): void {
 
@@ -117,7 +117,7 @@ window.addEventListener("load", function(): void {
             }
 
         //Spieler2 = o
-             else if (easyArray[i].symbol == "o") {
+            else if (easyArray[i].symbol == "o") {
                 const otherTurn: HTMLElement = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
@@ -127,8 +127,9 @@ window.addEventListener("load", function(): void {
                 gameboard.appendChild(otherTurn);
             }
 
-            // else if (currentPlayerIsPlayer0 == false && comVariable == true ) {
+            // else if (currentPlayerIsPlayer0 != true && comVariable == true ) {
             //     comHandler();
+            //     console.log("kommst du bis hier hin");
             // }
 
 
@@ -145,14 +146,15 @@ window.addEventListener("load", function(): void {
     // function comHandler(): void {
     //     setTimeout (function(): void {
 
-    //         if (comVariable == true) {
+    //         while (currentPlayerIsPlayer0 != true) {
     //             var randomNumber: number = Math.floor(Math.random());
-    //             myArray[randomNumber].symbol = "o";
+    //             easyArray[randomNumber].symbol = "o";
     //         }
+    //         clickFunction(randomNumber);
+    //         console.log("random number is " + randomNumber);
+    //         console.log("comHandler fired");
 
     //     },          300);
-
-       
     // }
 
  
@@ -162,7 +164,7 @@ window.addEventListener("load", function(): void {
         // console.log("position is " + positionImArray);
         for (let index: number  = 0; index <= board; index++) {
             if (positionImArray == index) {
-                if (currentPlayerIsPlayer0 == true) {
+                if (currentPlayerIsPlayer0 === true) {
                     easyArray[index].symbol = "x";
 
                     console.log("Kreuz gedrückt");
@@ -205,9 +207,9 @@ window.addEventListener("load", function(): void {
         //durchgehen des Arrays winningCondition 
         for (let i: number = 0; i <= 7; i++) {
              
-            if  (easyArray[winningConditions[i][0]].symbol != "free" || easyArray[winningConditions[i][1]].symbol != "free" || easyArray[winningConditions[i][2]].symbol != "free") {
+            if  (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
 
-                if (easyArray[winningConditions[i][0]].symbol == easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol == easyArray[winningConditions[i][2]].symbol) {
+                if (easyArray[winningConditions[i][0]].symbol === easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol === easyArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
                     countsEveryRound++;
                     console.log("Runde " + countsEveryRound);
@@ -222,23 +224,23 @@ window.addEventListener("load", function(): void {
             }
         } 
 
-        for (let index: number = 0; index <= easyArray.length; index++) {
+        for (let index: number = 0; index < easyArray.length; index++) {
             
             var counterFreePosition: number = 0;
 
             if (easyArray[index].symbol == "free") {
                 counterFreePosition++;
-                console.log("free" + counterFreePosition);
+                console.log("free " + counterFreePosition);
             }
         }
-        if (counterFreePosition == 0) {
+        if (counterFreePosition === 0) {
             gameEnding();
         }
     }
 
 
     function scoreHandler(): void {
-        if (currentPlayerIsPlayer0 == true) {
+        if (currentPlayerIsPlayer0 === true) {
             p2Score++;   
             console.log("player 2 score ");  
         }

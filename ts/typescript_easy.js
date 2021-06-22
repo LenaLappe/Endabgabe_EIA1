@@ -82,8 +82,9 @@ window.addEventListener("load", function () {
                 // console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
-            // else if (currentPlayerIsPlayer0 == false && comVariable == true ) {
+            // else if (currentPlayerIsPlayer0 != true && comVariable == true ) {
             //     comHandler();
+            //     console.log("kommst du bis hier hin");
             // }
             //überwachung der freien Felder, ob gedrückt wurde
             else if (easyArray[i].symbol == "free") {
@@ -98,17 +99,20 @@ window.addEventListener("load", function () {
     }
     // function comHandler(): void {
     //     setTimeout (function(): void {
-    //         if (comVariable == true) {
+    //         while (currentPlayerIsPlayer0 != true) {
     //             var randomNumber: number = Math.floor(Math.random());
-    //             myArray[randomNumber].symbol = "o";
+    //             easyArray[randomNumber].symbol = "o";
     //         }
+    //         clickFunction(randomNumber);
+    //         console.log("random number is " + randomNumber);
+    //         console.log("comHandler fired");
     //     },          300);
     // }
     function clickFunction(positionImArray) {
         // console.log("position is " + positionImArray);
         for (var index = 0; index <= board; index++) {
             if (positionImArray == index) {
-                if (currentPlayerIsPlayer0 == true) {
+                if (currentPlayerIsPlayer0 === true) {
                     easyArray[index].symbol = "x";
                     console.log("Kreuz gedrückt");
                 }
@@ -136,8 +140,8 @@ window.addEventListener("load", function () {
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
         for (var i = 0; i <= 7; i++) {
-            if (easyArray[winningConditions[i][0]].symbol != "free" || easyArray[winningConditions[i][1]].symbol != "free" || easyArray[winningConditions[i][2]].symbol != "free") {
-                if (easyArray[winningConditions[i][0]].symbol == easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol == easyArray[winningConditions[i][2]].symbol) {
+            if (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
+                if (easyArray[winningConditions[i][0]].symbol === easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol === easyArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
                     countsEveryRound++;
                     console.log("Runde " + countsEveryRound);
@@ -149,19 +153,19 @@ window.addEventListener("load", function () {
                 scoreHandler();
             }
         }
-        for (var index = 0; index <= easyArray.length; index++) {
+        for (var index = 0; index < easyArray.length; index++) {
             var counterFreePosition = 0;
             if (easyArray[index].symbol == "free") {
                 counterFreePosition++;
-                console.log("free" + counterFreePosition);
+                console.log("free " + counterFreePosition);
             }
         }
-        if (counterFreePosition == 0) {
+        if (counterFreePosition === 0) {
             gameEnding();
         }
     }
     function scoreHandler() {
-        if (currentPlayerIsPlayer0 == true) {
+        if (currentPlayerIsPlayer0 === true) {
             p2Score++;
             console.log("player 2 score ");
         }
