@@ -60,9 +60,12 @@ window.addEventListener("load", function(): void {
         comButton = document.createElement("button");
         comButton.classList.add("comButton");
         comButton.innerHTML = "Player vs Com";
-        comVariable = true;
-        comButton.addEventListener("click", drawField);
-
+        
+        comButton.addEventListener("click", () => {
+            comVariable = true;
+            drawField();
+        });
+        
         comOrPlayerButton.appendChild(comButton);
 
         
@@ -127,35 +130,41 @@ window.addEventListener("load", function(): void {
                 gameboard.appendChild(otherTurn);
             }
 
-            // else if (currentPlayerIsPlayer0 != true && comVariable == true ) {
-            //     comHandler();
-            //     console.log("kommst du bis hier hin");
-            // }
-
-
         //überwachung der freien Felder, ob gedrückt wurde
             else if (easyArray[i].symbol == "free") {
                 // console.log("i is " + i);
                 gameboard.addEventListener("click", function(): void {clickFunction(i); });
             }
         } 
+
+        if (currentPlayerIsPlayer0 != true && comVariable == true ) {
+            comHandler();
+            console.log("kommst du bis hier hin");
+        }
     }
 
 
     
-    // function comHandler(): void {
-    //     setTimeout (function(): void {
+    function comHandler(): void {
+        console.log("comHandler ");
+        // setTimeout (function(): void {
 
-    //         while (currentPlayerIsPlayer0 != true) {
-    //             var randomNumber: number = Math.floor(Math.random());
-    //             easyArray[randomNumber].symbol = "o";
-    //         }
-    //         clickFunction(randomNumber);
-    //         console.log("random number is " + randomNumber);
-    //         console.log("comHandler fired");
+        while (true) {
+            var randomNumber: number = Math.floor(Math.random() * easyArray.length);
 
-    //     },          300);
-    // }
+            if (easyArray[randomNumber].symbol === "free") {
+
+                easyArray[randomNumber].symbol = "o";
+                break;
+            }
+        }
+
+        clickFunction(randomNumber);
+        console.log("random number is " + randomNumber);
+        console.log("comHandler fired");
+
+        // },          300);
+    }
 
  
 
@@ -211,7 +220,7 @@ window.addEventListener("load", function(): void {
 
                 if (easyArray[winningConditions[i][0]].symbol === easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol === easyArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
-                    countsEveryRound++;
+                    
                     console.log("Runde " + countsEveryRound);
                     console.log ("won");
                 }
@@ -224,10 +233,10 @@ window.addEventListener("load", function(): void {
             }
         } 
 
+        let counterFreePosition: number = 0;
+
         for (let index: number = 0; index < easyArray.length; index++) {
             
-            var counterFreePosition: number = 0;
-
             if (easyArray[index].symbol == "free") {
                 counterFreePosition++;
                 console.log("free " + counterFreePosition);
@@ -255,16 +264,19 @@ window.addEventListener("load", function(): void {
 
     function gameEnding (): void {
 
+        countsEveryRound++;
+
         for (let i: number = 0; i < easyArray.length; i++) {
 
             easyArray[i].symbol = "free";
 
-            comVariable = false;
             roundWon = false;
 
-            drawField();
+            
             console.log("neu zeichnen");
         }
+
+        drawField();
 
         if (countsEveryRound == easy) {
             endBox();
@@ -277,6 +289,9 @@ window.addEventListener("load", function(): void {
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
+
+        comVariable = false;
+
         console.log("spielfeld löschen");
 
         if (p1Score >= p2Score) {

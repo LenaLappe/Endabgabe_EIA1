@@ -40,8 +40,10 @@ window.addEventListener("load", function () {
         comButton = document.createElement("button");
         comButton.classList.add("comButton");
         comButton.innerHTML = "Player vs Com";
-        comVariable = true;
-        comButton.addEventListener("click", drawField);
+        comButton.addEventListener("click", function () {
+            comVariable = true;
+            drawField();
+        });
         comOrPlayerButton.appendChild(comButton);
         playerButton = document.createElement("button");
         playerButton.classList.add("playerButton");
@@ -82,10 +84,6 @@ window.addEventListener("load", function () {
                 // console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
-            // else if (currentPlayerIsPlayer0 != true && comVariable == true ) {
-            //     comHandler();
-            //     console.log("kommst du bis hier hin");
-            // }
             //überwachung der freien Felder, ob gedrückt wurde
             else if (easyArray[i].symbol == "free") {
                 // console.log("i is " + i);
@@ -96,18 +94,26 @@ window.addEventListener("load", function () {
         for (var i = 0; i <= board; i++) {
             _loop_1(i);
         }
+        if (currentPlayerIsPlayer0 != true && comVariable == true) {
+            comHandler();
+            console.log("kommst du bis hier hin");
+        }
     }
-    // function comHandler(): void {
-    //     setTimeout (function(): void {
-    //         while (currentPlayerIsPlayer0 != true) {
-    //             var randomNumber: number = Math.floor(Math.random());
-    //             easyArray[randomNumber].symbol = "o";
-    //         }
-    //         clickFunction(randomNumber);
-    //         console.log("random number is " + randomNumber);
-    //         console.log("comHandler fired");
-    //     },          300);
-    // }
+    function comHandler() {
+        console.log("comHandler ");
+        // setTimeout (function(): void {
+        while (true) {
+            var randomNumber = Math.floor(Math.random() * easyArray.length);
+            if (easyArray[randomNumber].symbol === "free") {
+                easyArray[randomNumber].symbol = "o";
+                break;
+            }
+        }
+        clickFunction(randomNumber);
+        console.log("random number is " + randomNumber);
+        console.log("comHandler fired");
+        // },          300);
+    }
     function clickFunction(positionImArray) {
         // console.log("position is " + positionImArray);
         for (var index = 0; index <= board; index++) {
@@ -143,7 +149,6 @@ window.addEventListener("load", function () {
             if (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
                 if (easyArray[winningConditions[i][0]].symbol === easyArray[winningConditions[i][1]].symbol && easyArray[winningConditions[i][1]].symbol === easyArray[winningConditions[i][2]].symbol) {
                     roundWon = true;
-                    countsEveryRound++;
                     console.log("Runde " + countsEveryRound);
                     console.log("won");
                 }
@@ -153,8 +158,8 @@ window.addEventListener("load", function () {
                 scoreHandler();
             }
         }
+        var counterFreePosition = 0;
         for (var index = 0; index < easyArray.length; index++) {
-            var counterFreePosition = 0;
             if (easyArray[index].symbol == "free") {
                 counterFreePosition++;
                 console.log("free " + counterFreePosition);
@@ -176,13 +181,13 @@ window.addEventListener("load", function () {
         gameEnding();
     }
     function gameEnding() {
+        countsEveryRound++;
         for (var i = 0; i < easyArray.length; i++) {
             easyArray[i].symbol = "free";
-            comVariable = false;
             roundWon = false;
-            drawField();
             console.log("neu zeichnen");
         }
+        drawField();
         if (countsEveryRound == easy) {
             endBox();
         }
@@ -191,6 +196,7 @@ window.addEventListener("load", function () {
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
+        comVariable = false;
         console.log("spielfeld löschen");
         if (p1Score >= p2Score) {
             textBox.innerHTML = "the winner is Player 1";
