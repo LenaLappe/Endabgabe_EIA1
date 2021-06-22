@@ -28,7 +28,7 @@ window.addEventListener("load", function(): void {
     
     var comVariable: boolean = false;
 
-    var board: number = 15;
+    var board: number = 8;
     let gameboard: HTMLDivElement;
 
     interface FieldType {symbol: string; }
@@ -60,9 +60,12 @@ window.addEventListener("load", function(): void {
         comButton = document.createElement("button");
         comButton.classList.add("comButton");
         comButton.innerHTML = "Player vs Com";
-        comVariable = true;
-        comButton.addEventListener("click", drawField);
-
+        
+        comButton.addEventListener("click", () => {
+            comVariable = true;
+            drawField();
+        });
+        
         comOrPlayerButton.appendChild(comButton);
 
         
@@ -73,8 +76,9 @@ window.addEventListener("load", function(): void {
 
         comOrPlayerButton.appendChild(playerButton);
 
-
     }
+
+
 
     function drawField(): void {
 
@@ -100,7 +104,7 @@ window.addEventListener("load", function(): void {
             console.log(i);
 
         
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of 4";
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
             player1Score.innerHTML = "Player 1: " + p1Score;
             player2Score.innerHTML = "Player 2: " + p2Score;
 
@@ -117,7 +121,7 @@ window.addEventListener("load", function(): void {
             }
 
         //Spieler2 = o
-             else if (mediumArray[i].symbol == "o") {
+            else if (mediumArray[i].symbol == "o") {
                 const otherTurn: HTMLElement = document.createElement("i");
                 otherTurn.classList.add("far", "fa-circle");
                 // otherTurn.style.color = "white";
@@ -127,59 +131,79 @@ window.addEventListener("load", function(): void {
                 gameboard.appendChild(otherTurn);
             }
 
-            // else if (currentPlayerIsPlayer0 == false && comVariable == true ) {
-            //     comHandler();
-            // }
-
-
         //überwachung der freien Felder, ob gedrückt wurde
             else if (mediumArray[i].symbol == "free") {
                 // console.log("i is " + i);
                 gameboard.addEventListener("click", function(): void {clickFunction(i); });
             }
         } 
+
     }
 
 
     
-    // function comHandler(): void {
-    //     setTimeout (function(): void {
+    function comHandler(): void {
+        console.log("comHandler ");
+        setTimeout (function(): void {
 
-    //         if (comVariable == true) {
-    //             var randomNumber: number = Math.floor(Math.random());
-    //             myArray[randomNumber].symbol = "o";
-    //         }
+            while (true) {
+                var randomNumber: number = Math.floor(Math.random() * mediumArray.length);
 
-    //     },          300);
+                if (mediumArray[randomNumber].symbol === "free") {
 
-       
-    // }
+                    mediumArray[randomNumber].symbol = "o";
+                    break;
+                }
+            }
+
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+
+            drawField();
+            handleWinningResults();
+            
+            console.log("random number is " + randomNumber);
+            console.log("comHandler fired");
+
+        },          300);
+    }
 
  
 
 
     function clickFunction(positionImArray: number): void {
         // console.log("position is " + positionImArray);
-        for (let index: number  = 0; index <= board; index++) {
-            if (positionImArray == index) {
-                if (currentPlayerIsPlayer0 == true) {
-                    mediumArray[index].symbol = "x";
+        // for (let index: number  = 0; index <= board; index++) {
+            // if (positionImArray == index) {
+        if (currentPlayerIsPlayer0 === true) {
+            mediumArray[positionImArray].symbol = "x";
 
-                    console.log("Kreuz gedrückt");
-                 } 
-                 else {
-                    mediumArray[index].symbol = "o";
+            console.log("Kreuz gedrückt");
 
-                    console.log("Kreis gedrückt");
-                }
+            
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            
+            drawField();
+            handleWinningResults();
 
-             }
+            if ( comVariable === true) {
+                comHandler();
+            }
+        } 
+        else {
+            mediumArray[positionImArray].symbol = "o";
+
+            console.log("Kreis gedrückt");
+
+            
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            
+            drawField();
+            handleWinningResults();
         }
-        
-        currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
-        drawField();
 
-        handleWinningResults();
+            //  }
+        // }
+        
     }
 
 
@@ -205,13 +229,13 @@ window.addEventListener("load", function(): void {
         
 
         //durchgehen des Arrays winningCondition 
-        for (let i: number = 0; i <= winningConditions.length; i++) {
+        for (let i: number = 0; i <= 7; i++) {
              
-            if  (mediumArray[winningConditions[i][0]].symbol != "free" || mediumArray[winningConditions[i][1]].symbol != "free" || mediumArray[winningConditions[i][2]].symbol != "free" || mediumArray[winningConditions[i][3]].symbol != "free") {
+            if  ( mediumArray[winningConditions[i][0]].symbol != "free" || mediumArray[winningConditions[i][1]].symbol != "free" || mediumArray[winningConditions[i][2]].symbol != "free" || mediumArray[winningConditions[i][3]].symbol != "free") {
 
                 if (mediumArray[winningConditions[i][0]].symbol == mediumArray[winningConditions[i][1]].symbol && mediumArray[winningConditions[i][1]].symbol == mediumArray[winningConditions[i][2]].symbol && mediumArray[winningConditions[i][2]].symbol == mediumArray[winningConditions[i][3]].symbol) {
                     roundWon = true;
-                    countsEveryRound++;
+                    
                     console.log("Runde " + countsEveryRound);
                     console.log ("won");
                 }
@@ -224,23 +248,23 @@ window.addEventListener("load", function(): void {
             }
         } 
 
-        for (let index: number = 0; index <= mediumArray.length; index++) {
-            
-            var counterFreePosition: number = 0;
+        let counterFreePosition: number = 0;
 
+        for (let index: number = 0; index < mediumArray.length; index++) {
+            
             if (mediumArray[index].symbol == "free") {
                 counterFreePosition++;
-                console.log("free" + counterFreePosition);
+                console.log("free " + counterFreePosition);
             }
         }
-        if (counterFreePosition == 0) {
+        if (counterFreePosition === 0) {
             gameEnding();
         }
     }
 
 
     function scoreHandler(): void {
-        if (currentPlayerIsPlayer0 == true) {
+        if (currentPlayerIsPlayer0 === true) {
             p2Score++;   
             console.log("player 2 score ");  
         }
@@ -255,16 +279,19 @@ window.addEventListener("load", function(): void {
 
     function gameEnding (): void {
 
+        countsEveryRound++;
+
         for (let i: number = 0; i < mediumArray.length; i++) {
 
             mediumArray[i].symbol = "free";
 
-            comVariable = false;
             roundWon = false;
 
-            drawField();
+            
             console.log("neu zeichnen");
         }
+
+        drawField();
 
         if (countsEveryRound == medium) {
             endBox();
@@ -277,17 +304,16 @@ window.addEventListener("load", function(): void {
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerMedium.innerHTML = "";
+
+        comVariable = false;
+
         console.log("spielfeld löschen");
 
-        if (p1Score >= p2Score) {
+        if (p1Score > p2Score) {
             textBox.innerHTML = "the winner is Player 1";
-        }
-
-        else if (p2Score >= p1Score) {
+        } else if (p2Score > p1Score) {
             textBox.innerHTML = "the winner is Player 2";
-        }
-
-        else if (p1Score == p2Score) {
+        } else {
             textBox.innerHTML = "it's a draw";
         }
 
@@ -303,11 +329,5 @@ window.addEventListener("load", function(): void {
     }   
 
 
-
-//mir fehlt:
-// 1. draw
-// 2. com gegner
-
-// 5. schwierige schwierigkeit
 
 });

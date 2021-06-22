@@ -20,7 +20,7 @@ window.addEventListener("load", function () {
     var roundWon = false;
     var currentPlayerIsPlayer0 = true;
     var comVariable = false;
-    var board = 24;
+    var board = 8;
     var gameboard;
     var hardArray = [{ symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }, { symbol: "free" }];
     hardButton.addEventListener("click", comOrPlayerHandler);
@@ -40,8 +40,10 @@ window.addEventListener("load", function () {
         comButton = document.createElement("button");
         comButton.classList.add("comButton");
         comButton.innerHTML = "Player vs Com";
-        comVariable = true;
-        comButton.addEventListener("click", drawField);
+        comButton.addEventListener("click", function () {
+            comVariable = true;
+            drawField();
+        });
         comOrPlayerButton.appendChild(comButton);
         playerButton = document.createElement("button");
         playerButton.classList.add("playerButton");
@@ -62,7 +64,7 @@ window.addEventListener("load", function () {
             containerHard.appendChild(gameboard);
             gameboard.setAttributeNode(idField);
             console.log(i);
-            roundCounter.innerHTML = "Round " + countsEveryRound + " of 5";
+            roundCounter.innerHTML = "Round " + countsEveryRound + " of 3";
             player1Score.innerHTML = "Player 1: " + p1Score;
             player2Score.innerHTML = "Player 2: " + p2Score;
             //Felder werden mit ensprechenden icons gefüllt
@@ -82,9 +84,6 @@ window.addEventListener("load", function () {
                 // console.log("Kreis");
                 gameboard.appendChild(otherTurn);
             }
-            // else if (currentPlayerIsPlayer0 == false && comVariable == true ) {
-            //     comHandler();
-            // }
             //überwachung der freien Felder, ob gedrückt wurde
             else if (hardArray[i].symbol == "free") {
                 // console.log("i is " + i);
@@ -96,31 +95,46 @@ window.addEventListener("load", function () {
             _loop_1(i);
         }
     }
-    // function comHandler(): void {
-    //     setTimeout (function(): void {
-    //         if (comVariable == true) {
-    //             var randomNumber: number = Math.floor(Math.random());
-    //             myArray[randomNumber].symbol = "o";
-    //         }
-    //     },          300);
-    // }
-    function clickFunction(positionImArray) {
-        // console.log("position is " + positionImArray);
-        for (var index = 0; index <= board; index++) {
-            if (positionImArray == index) {
-                if (currentPlayerIsPlayer0 == true) {
-                    hardArray[index].symbol = "x";
-                    console.log("Kreuz gedrückt");
-                }
-                else {
-                    hardArray[index].symbol = "o";
-                    console.log("Kreis gedrückt");
+    function comHandler() {
+        console.log("comHandler ");
+        setTimeout(function () {
+            while (true) {
+                var randomNumber = Math.floor(Math.random() * hardArray.length);
+                if (hardArray[randomNumber].symbol === "free") {
+                    hardArray[randomNumber].symbol = "o";
+                    break;
                 }
             }
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            drawField();
+            handleWinningResults();
+            console.log("random number is " + randomNumber);
+            console.log("comHandler fired");
+        }, 300);
+    }
+    function clickFunction(positionImArray) {
+        // console.log("position is " + positionImArray);
+        // for (let index: number  = 0; index <= board; index++) {
+        // if (positionImArray == index) {
+        if (currentPlayerIsPlayer0 === true) {
+            hardArray[positionImArray].symbol = "x";
+            console.log("Kreuz gedrückt");
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            drawField();
+            handleWinningResults();
+            if (comVariable === true) {
+                comHandler();
+            }
         }
-        currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
-        drawField();
-        handleWinningResults();
+        else {
+            hardArray[positionImArray].symbol = "o";
+            console.log("Kreis gedrückt");
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            drawField();
+            handleWinningResults();
+        }
+        //  }
+        // }
     }
     //gewinnen einer Runde
     var winningConditions = [
@@ -139,11 +153,10 @@ window.addEventListener("load", function () {
     ];
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
-        for (var i = 0; i <= winningConditions.length; i++) {
+        for (var i = 0; i <= 7; i++) {
             if (hardArray[winningConditions[i][0]].symbol != "free" || hardArray[winningConditions[i][1]].symbol != "free" || hardArray[winningConditions[i][2]].symbol != "free" || hardArray[winningConditions[i][3]].symbol != "free" || hardArray[winningConditions[i][4]].symbol != "free") {
                 if (hardArray[winningConditions[i][0]].symbol == hardArray[winningConditions[i][1]].symbol && hardArray[winningConditions[i][1]].symbol == hardArray[winningConditions[i][2]].symbol && hardArray[winningConditions[i][2]].symbol == hardArray[winningConditions[i][3]].symbol && hardArray[winningConditions[i][3]].symbol == hardArray[winningConditions[i][4]].symbol) {
                     roundWon = true;
-                    countsEveryRound++;
                     console.log("Runde " + countsEveryRound);
                     console.log("won");
                 }
@@ -153,19 +166,19 @@ window.addEventListener("load", function () {
                 scoreHandler();
             }
         }
-        for (var index = 0; index <= hardArray.length; index++) {
-            var counterFreePosition = 0;
+        var counterFreePosition = 0;
+        for (var index = 0; index < hardArray.length; index++) {
             if (hardArray[index].symbol == "free") {
                 counterFreePosition++;
-                console.log("free" + counterFreePosition);
+                console.log("free " + counterFreePosition);
             }
         }
-        if (counterFreePosition == 0) {
+        if (counterFreePosition === 0) {
             gameEnding();
         }
     }
     function scoreHandler() {
-        if (currentPlayerIsPlayer0 == true) {
+        if (currentPlayerIsPlayer0 === true) {
             p2Score++;
             console.log("player 2 score ");
         }
@@ -176,13 +189,13 @@ window.addEventListener("load", function () {
         gameEnding();
     }
     function gameEnding() {
+        countsEveryRound++;
         for (var i = 0; i < hardArray.length; i++) {
             hardArray[i].symbol = "free";
-            comVariable = false;
             roundWon = false;
-            drawField();
             console.log("neu zeichnen");
         }
+        drawField();
         if (countsEveryRound == hard) {
             endBox();
         }
@@ -191,14 +204,15 @@ window.addEventListener("load", function () {
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerHard.innerHTML = "";
+        comVariable = false;
         console.log("spielfeld löschen");
-        if (p1Score >= p2Score) {
+        if (p1Score > p2Score) {
             textBox.innerHTML = "the winner is Player 1";
         }
-        else if (p2Score >= p1Score) {
+        else if (p2Score > p1Score) {
             textBox.innerHTML = "the winner is Player 2";
         }
-        else if (p1Score == p2Score) {
+        else {
             textBox.innerHTML = "it's a draw";
         }
         console.log("spielende funktionirt");
@@ -208,8 +222,5 @@ window.addEventListener("load", function () {
         restartButton.addEventListener("click", comOrPlayerHandler);
         textBox.appendChild(restartButton);
     }
-    //mir fehlt:
-    // 1. draw
-    // 2. com gegner
 });
 //# sourceMappingURL=typescript_hard.js.map

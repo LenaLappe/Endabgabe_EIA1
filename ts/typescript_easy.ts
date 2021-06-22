@@ -79,6 +79,7 @@ window.addEventListener("load", function(): void {
     }
 
 
+
     function drawField(): void {
 
     // div mit comOrPlayerButtons leeren
@@ -137,33 +138,33 @@ window.addEventListener("load", function(): void {
             }
         } 
 
-        if (currentPlayerIsPlayer0 != true && comVariable == true ) {
-            comHandler();
-            console.log("kommst du bis hier hin");
-        }
     }
 
 
     
     function comHandler(): void {
         console.log("comHandler ");
-        // setTimeout (function(): void {
+        setTimeout (function(): void {
 
-        while (true) {
-            var randomNumber: number = Math.floor(Math.random() * easyArray.length);
+            while (true) {
+                var randomNumber: number = Math.floor(Math.random() * easyArray.length);
 
-            if (easyArray[randomNumber].symbol === "free") {
+                if (easyArray[randomNumber].symbol === "free") {
 
-                easyArray[randomNumber].symbol = "o";
-                break;
+                    easyArray[randomNumber].symbol = "o";
+                    break;
+                }
             }
-        }
 
-        clickFunction(randomNumber);
-        console.log("random number is " + randomNumber);
-        console.log("comHandler fired");
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
 
-        // },          300);
+            drawField();
+            handleWinningResults();
+            
+            console.log("random number is " + randomNumber);
+            console.log("comHandler fired");
+
+        },          300);
     }
 
  
@@ -171,26 +172,38 @@ window.addEventListener("load", function(): void {
 
     function clickFunction(positionImArray: number): void {
         // console.log("position is " + positionImArray);
-        for (let index: number  = 0; index <= board; index++) {
-            if (positionImArray == index) {
-                if (currentPlayerIsPlayer0 === true) {
-                    easyArray[index].symbol = "x";
+        // for (let index: number  = 0; index <= board; index++) {
+            // if (positionImArray == index) {
+        if (currentPlayerIsPlayer0 === true) {
+            easyArray[positionImArray].symbol = "x";
 
-                    console.log("Kreuz gedrückt");
-                 } 
-                 else {
-                    easyArray[index].symbol = "o";
+            console.log("Kreuz gedrückt");
 
-                    console.log("Kreis gedrückt");
-                }
+            
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            
+            drawField();
+            handleWinningResults();
 
-             }
+            if ( comVariable === true) {
+                comHandler();
+            }
+        } 
+        else {
+            easyArray[positionImArray].symbol = "o";
+
+            console.log("Kreis gedrückt");
+
+            
+            currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
+            
+            drawField();
+            handleWinningResults();
         }
-        
-        currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
-        drawField();
 
-        handleWinningResults();
+            //  }
+        // }
+        
     }
 
 
@@ -294,15 +307,11 @@ window.addEventListener("load", function(): void {
 
         console.log("spielfeld löschen");
 
-        if (p1Score >= p2Score) {
+        if (p1Score > p2Score) {
             textBox.innerHTML = "the winner is Player 1";
-        }
-
-        else if (p2Score >= p1Score) {
+        } else if (p2Score > p1Score) {
             textBox.innerHTML = "the winner is Player 2";
-        }
-
-        else if (p1Score == p2Score) {
+        } else {
             textBox.innerHTML = "it's a draw";
         }
 
@@ -318,12 +327,5 @@ window.addEventListener("load", function(): void {
     }   
 
 
-
-//mir fehlt:
-// 1. draw
-// 2. com gegner
-
-// 4. mittlere schwierigkeit
-// 5. schwierige schwierigkeit
 
 });
