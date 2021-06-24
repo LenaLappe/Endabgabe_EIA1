@@ -211,15 +211,15 @@ window.addEventListener("load", function(): void {
 
     //gewinnen einer Runde
     const winningConditions: number [][] = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
+        [0, 1, 2], //0
+        [3, 4, 5], //1
+        [6, 7, 8], //2
+        [0, 3, 6], //3
+        [1, 4, 7], //4
+        [2, 5, 8], //5
+        [0, 4, 8], //6
+        [2, 4, 6]  //7
+    ]; //0  1   2
 
    
      
@@ -227,7 +227,7 @@ window.addEventListener("load", function(): void {
         
 
         //durchgehen des Arrays winningCondition 
-        for (let i: number = 0; i < winningConditions.length; i++) {
+        for (let i: number = 0; i < 7; i++) {
              
             if  (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
 
