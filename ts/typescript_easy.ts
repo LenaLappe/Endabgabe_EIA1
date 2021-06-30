@@ -141,7 +141,8 @@ window.addEventListener("load", function(): void {
     }
 
 
-    
+  // Funktion die die Spielzüge des Coms macht
+  //random Number generieren   
     function comHandler(): void {
         console.log("comHandler ");
         setTimeout (function(): void {
@@ -169,17 +170,15 @@ window.addEventListener("load", function(): void {
 
  
 
-
+// Kreuz oder Kreis
     function clickFunction(positionImArray: number): void {
-        // console.log("position is " + positionImArray);
-        // for (let index: number  = 0; index <= board; index++) {
-            // if (positionImArray == index) {
+        
         if (currentPlayerIsPlayer0 === true) {
             easyArray[positionImArray].symbol = "x";
 
             console.log("Kreuz gedrückt");
 
-            
+            //Player nach jedem Zug wechseln
             currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
             
             drawField();
@@ -194,15 +193,13 @@ window.addEventListener("load", function(): void {
 
             console.log("Kreis gedrückt");
 
-            
+            //Player nach jedem Zug wechseln
             currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
             
             drawField();
             handleWinningResults();
         }
 
-            //  }
-        // }
         
     }
 
@@ -246,6 +243,8 @@ window.addEventListener("load", function(): void {
             }
         } 
 
+
+        // schauen, ob es noch freie Felder gibt, dammit es auch zum draw kommen kann, wenn der Counter bei Null ist
         let counterFreePosition: number = 0;
 
         for (let index: number = 0; index < easyArray.length; index++) {
@@ -261,6 +260,7 @@ window.addEventListener("load", function(): void {
     }
 
 
+    //hochzählen der Punktestände
     function scoreHandler(): void {
         if (currentPlayerIsPlayer0 === true) {
             p2Score++;   
@@ -274,7 +274,7 @@ window.addEventListener("load", function(): void {
     }
 
     
-
+    //Runden werden hochgezählt und nach einer Runder geht es wieder zur Funktion drawFiled, die wieder ein Spielfeld generiert
     function gameEnding (): void {
 
         countsEveryRound++;
@@ -291,6 +291,8 @@ window.addEventListener("load", function(): void {
 
         drawField();
 
+        //wenn Runden, der kompletten Spielrunden entsprechen, dann ist das komplette Spiel Vorbei
+        // weitergeleitet zur Funktion endBox
         if (countsEveryRound == easy) {
             endBox();
         }
@@ -299,14 +301,17 @@ window.addEventListener("load", function(): void {
 
     function endBox (): void {
 
+        //erstmal alles leeren
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
 
+        //Variable wieder zurücksetzen
         comVariable = false;
 
         console.log("spielfeld löschen");
 
+        //Gewinnernachricht
         if (p1Score > p2Score) {
             textBox.innerHTML = "the winner is Player 1";
         } else if (p2Score > p1Score) {
@@ -317,6 +322,8 @@ window.addEventListener("load", function(): void {
 
         console.log("spielende funktionirt");
 
+        //Button, damit man nochmal spielen kann
+        // wahl ob Player vs Player oder Player vs Com
         restartButton = document.createElement("button");
         restartButton.classList.add("returnButton");
         restartButton.innerHTML = "restart";
