@@ -65,15 +65,15 @@ button:active {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 50%);
-    bottom: 34%;
+    bottom: 36%;
     display: grid;
     grid-template-columns: repeat(5, auto);
     margin: 50px auto;
 }
 .field {
     font-family: "cryon", cursive;
-    width: 96px;
-    height: 96px;
+    width: 95px;
+    height: 95px;
     box-shadow: 0 0 0 1px #333333;
     border: 1px solid white;
     cursor: pointer;
