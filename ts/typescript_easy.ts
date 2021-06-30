@@ -333,6 +333,4 @@ window.addEventListener("load", function(): void {
         textBox.appendChild(restartButton);
     }   
 
-
-
 });
