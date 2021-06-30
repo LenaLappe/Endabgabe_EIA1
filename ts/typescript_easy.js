@@ -95,6 +95,8 @@ window.addEventListener("load", function () {
             _loop_1(i);
         }
     }
+    // Funktion die die Spielzüge des Coms macht
+    //random Number generieren   
     function comHandler() {
         console.log("comHandler ");
         setTimeout(function () {
@@ -112,13 +114,12 @@ window.addEventListener("load", function () {
             console.log("comHandler fired");
         }, 500);
     }
+    // Kreuz oder Kreis
     function clickFunction(positionImArray) {
-        // console.log("position is " + positionImArray);
-        // for (let index: number  = 0; index <= board; index++) {
-        // if (positionImArray == index) {
         if (currentPlayerIsPlayer0 === true) {
             easyArray[positionImArray].symbol = "x";
             console.log("Kreuz gedrückt");
+            //Player nach jedem Zug wechseln
             currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
             drawField();
             handleWinningResults();
@@ -129,12 +130,11 @@ window.addEventListener("load", function () {
         else {
             easyArray[positionImArray].symbol = "o";
             console.log("Kreis gedrückt");
+            //Player nach jedem Zug wechseln
             currentPlayerIsPlayer0 = !currentPlayerIsPlayer0;
             drawField();
             handleWinningResults();
         }
-        //  }
-        // }
     }
     //gewinnen einer Runde
     var winningConditions = [
@@ -145,8 +145,8 @@ window.addEventListener("load", function () {
         [1, 4, 7],
         [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6]
-    ];
+        [2, 4, 6] //7
+    ]; //0  1   2
     function handleWinningResults() {
         //durchgehen des Arrays winningCondition 
         for (var i = 0; i < winningConditions.length; i++) {
@@ -162,6 +162,7 @@ window.addEventListener("load", function () {
                 scoreHandler();
             }
         }
+        // schauen, ob es noch freie Felder gibt, dammit es auch zum draw kommen kann, wenn der Counter bei Null ist
         var counterFreePosition = 0;
         for (var index = 0; index < easyArray.length; index++) {
             if (easyArray[index].symbol == "free") {
@@ -173,6 +174,7 @@ window.addEventListener("load", function () {
             gameEnding();
         }
     }
+    //hochzählen der Punktestände
     function scoreHandler() {
         if (currentPlayerIsPlayer0 === true) {
             p2Score++;
@@ -184,6 +186,7 @@ window.addEventListener("load", function () {
         }
         gameEnding();
     }
+    //Runden werden hochgezählt und nach einer Runder geht es wieder zur Funktion drawFiled, die wieder ein Spielfeld generiert
     function gameEnding() {
         countsEveryRound++;
         for (var i = 0; i < easyArray.length; i++) {
@@ -192,16 +195,21 @@ window.addEventListener("load", function () {
             console.log("neu zeichnen");
         }
         drawField();
+        //wenn Runden, der kompletten Spielrunden entsprechen, dann ist das komplette Spiel Vorbei
+        // weitergeleitet zur Funktion endBox
         if (countsEveryRound == easy) {
             endBox();
         }
     }
     function endBox() {
+        //erstmal alles leeren
         roundCounter.innerHTML = "";
         gameboard.innerHTML = "";
         containerEasy.innerHTML = "";
+        //Variable wieder zurücksetzen
         comVariable = false;
         console.log("spielfeld löschen");
+        //Gewinnernachricht
         if (p1Score > p2Score) {
             textBox.innerHTML = "the winner is Player 1";
         }
@@ -212,6 +220,8 @@ window.addEventListener("load", function () {
             textBox.innerHTML = "it's a draw";
         }
         console.log("spielende funktionirt");
+        //Button, damit man nochmal spielen kann
+        // wahl ob Player vs Player oder Player vs Com
         restartButton = document.createElement("button");
         restartButton.classList.add("returnButton");
         restartButton.innerHTML = "restart";

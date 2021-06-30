@@ -224,7 +224,7 @@ window.addEventListener("load", function(): void {
         
 
         //durchgehen des Arrays winningCondition 
-        for (let i: number = 0; i < 7; i++) {
+        for (let i: number = 0; i < winningConditions.length; i++) {
              
             if  (easyArray[winningConditions[i][0]].symbol !== "free" || easyArray[winningConditions[i][1]].symbol !== "free" || easyArray[winningConditions[i][2]].symbol !== "free") {
 

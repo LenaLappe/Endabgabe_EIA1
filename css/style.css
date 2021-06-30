@@ -90,6 +90,11 @@ i.far.fa-circle {
     font-size: 80px;
 
 }
+.textBox {
+    position: relative;
+    top: 150px;
+    font-size: 30px;
+}
 
 
 footer {
